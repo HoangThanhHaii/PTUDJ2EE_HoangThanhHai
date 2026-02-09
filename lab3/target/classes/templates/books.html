@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách sách</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; }
+        h1 { text-align: center; color: #2c3e50; }
+        a { text-decoration: none; color: #3498db; }
+        a:hover { text-decoration: underline; }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        th { background: #3498db; color: #fff; }
+        tr:hover { background: #f1f1f1; }
+        .top-link { text-align:center; margin-bottom:15px; }
+    </style>
+</head>
+<body>
+<h1>Danh sách sách</h1>
+<div class="top-link">
+    <a href="/books/add">➕ Thêm sách mới</a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Tiêu đề</th>
+        <th>Tác giả</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td>
+            <a th:href="@{/books/edit/{id}(id=${book.id})}">✏️ Sửa</a> |
+            <a th:href="@{/books/delete/{id}(id=${book.id})}" style="color:red;">🗑️ Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
