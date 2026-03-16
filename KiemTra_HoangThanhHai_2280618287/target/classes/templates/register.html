@@ -1,0 +1,134 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--    <title>Register Student</title>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<h2>Register Student</h2>-->
+
+<!--<form th:action="@{/register}" th:object="${student}" method="post">-->
+
+<!--    <label>Username</label>-->
+<!--    <input type="text" th:field="*{username}" required>-->
+<!--    <br><br>-->
+
+<!--    <label>Password</label>-->
+<!--    <input type="password" th:field="*{password}" required>-->
+<!--    <br><br>-->
+
+<!--    <label>Email</label>-->
+<!--    <input type="email" th:field="*{email}" required>-->
+<!--    <br><br>-->
+
+<!--    <button type="submit">Register</button>-->
+
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register Student</title>
+    <style>
+        /* CSS làm đẹp nhưng không chạm vào cấu trúc HTML */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        /* Trang trí tiêu đề */
+        h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Trang trí Form và các thành phần bên trong */
+        form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 350px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box; /* Đảm bảo padding không làm tràn input */
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #5e3a8a;
+        }
+    </style>
+</head>
+
+<body>
+
+<div>
+    <h2>Register Student</h2>
+
+    <form th:action="@{/register}" th:object="${student}" method="post">
+
+        <label>Username</label>
+        <input type="text" th:field="*{username}" required>
+        <br><br>
+
+        <label>Password</label>
+        <input type="password" th:field="*{password}" required>
+        <br><br>
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required>
+        <br><br>
+
+        <button type="submit">Register</button>
+
+    </form>
+</div>
+
+</body>
+</html>

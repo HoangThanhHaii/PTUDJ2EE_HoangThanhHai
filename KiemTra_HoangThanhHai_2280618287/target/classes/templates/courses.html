@@ -1,0 +1,252 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Course List</title>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<h2>Course List</h2>-->
+
+<!--<a href="/admin/courses/create">Create Course</a>-->
+
+<!--<table border="1">-->
+
+<!--    <tr>-->
+<!--        <th>ID</th>-->
+<!--        <th>Name</th>-->
+<!--        <th>Credits</th>-->
+<!--        <th>Action</th>-->
+<!--    </tr>-->
+
+<!--    <tr th:each="course : ${courses}">-->
+<!--        <td th:text="${course.id}"></td>-->
+<!--        <td th:text="${course.name}"></td>-->
+<!--        <td th:text="${course.credits}"></td>-->
+
+<!--        <td>-->
+<!--            <a th:href="@{/admin/courses/edit/{id}(id=${course.id})}">Edit</a>-->
+<!--            <a th:href="@{/admin/courses/delete/{id}(id=${course.id})}">Delete</a>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+
+<!--</table>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Management - Premium UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --danger-color: #ef4444;
+            --success-color: #22c55e;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1e293b;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* Nút Create Course */
+        .btn-create {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+            filter: brightness(1.1);
+        }
+
+        /* Bảng dữ liệu */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 10px;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #fcfaff;
+        }
+
+        /* Badge cho Credits */
+        .credit-badge {
+            background: #eef2ff;
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Các nút hành động */
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        .edit {
+            background-color: #f0f9ff;
+            color: #0369a1;
+        }
+
+        .edit:hover {
+            background-color: #0369a1;
+            color: white;
+        }
+
+        .delete {
+            background-color: #fef2f2;
+            color: var(--danger-color);
+        }
+
+        .delete:hover {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        /* Hiệu ứng mượt mà */
+        .container, .btn-create, tr {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2><i class="fa-solid fa-graduation-cap"></i> Course Management</h2>
+
+    <a href="/admin/courses/create" class="btn-create">
+        <i class="fa-solid fa-plus"></i> Create New Course
+    </a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Credits</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${courses}">
+            <td th:text="${'#' + course.id}" style="font-weight: 600; color: #94a3b8;"></td>
+            <td th:text="${course.name}" style="font-weight: 500;"></td>
+            <td>
+                    <span class="credit-badge">
+                        <i class="fa-solid fa-star"></i> <span th:text="${course.credits}"></span>
+                    </span>
+            </td>
+            <td class="action-btns">
+                <a th:href="@{/admin/courses/edit/{id}(id=${course.id})}" class="btn-action edit">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                </a>
+                <a th:href="@{/admin/courses/delete/{id}(id=${course.id})}"
+                   class="btn-action delete"
+                   onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học này?')">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

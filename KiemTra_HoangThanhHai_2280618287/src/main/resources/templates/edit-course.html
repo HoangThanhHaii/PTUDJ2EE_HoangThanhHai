@@ -1,0 +1,208 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--    <title>Edit Course</title>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<h2>Edit Course</h2>-->
+
+<!--<form th:action="@{/admin/courses/update}" th:object="${course}" method="post">-->
+
+<!--    &lt;!&ndash; ID ẩn &ndash;&gt;-->
+<!--    <input type="hidden" th:field="*{id}">-->
+
+<!--    <label>Course Name</label><br>-->
+<!--    <input type="text" th:field="*{name}" required>-->
+<!--    <br><br>-->
+
+<!--    <label>Lecturer</label><br>-->
+<!--    <input type="text" th:field="*{lecturer}">-->
+<!--    <br><br>-->
+
+<!--    <label>Credits</label><br>-->
+<!--    <input type="number" th:field="*{credits}">-->
+<!--    <br><br>-->
+
+<!--    <button type="submit">Update</button>-->
+
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --edit-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* Màu hồng cam rực rỡ */
+            --input-border: #e2e8f0;
+            --focus-color: #f5576c;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fdfbfb;
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .edit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(245, 87, 108, 0.15);
+            width: 100%;
+            max-width: 420px;
+            border-top: 6px solid #f5576c; /* Thanh màu điểm nhấn phía trên */
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            text-align: center;
+            color: #2d3436;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #636e72;
+            font-size: 0.9rem;
+            padding-left: 5px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--input-border);
+            border-radius: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        input:focus {
+            border-color: var(--focus-color);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(245, 87, 108, 0.1);
+        }
+
+        /* Nút Update rực rỡ */
+        button {
+            width: 100%;
+            background: var(--edit-gradient);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(245, 87, 108, 0.3);
+            filter: brightness(1.05);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .cancel-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #b2bec3;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .cancel-link:hover {
+            color: #f5576c;
+        }
+
+        /* Trang trí cho ID (nếu hiển thị) */
+        .id-badge {
+            font-size: 0.8rem;
+            color: #f5576c;
+            background: #fff5f6;
+            padding: 2px 8px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="edit-card">
+    <h2>
+        <i class="fa-solid fa-pen-nib"></i>
+        Edit Course
+    </h2>
+
+    <form th:action="@{/admin/courses/save}" th:object="${course}" method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-book"></i> Course Name</label>
+            <input type="text" th:field="*{name}" placeholder="Update course name..." required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-star"></i> Credits</label>
+            <input type="number" th:field="*{credits}" min="1" max="10" required>
+        </div>
+
+        <button type="submit">
+            <i class="fa-solid fa-rotate"></i> Update Changes
+        </button>
+
+        <a href="/admin/courses" class="cancel-link">
+            <i class="fa-solid fa-xmark"></i> Cancel and go back
+        </a>
+    </form>
+</div>
+
+</body>
+</html>

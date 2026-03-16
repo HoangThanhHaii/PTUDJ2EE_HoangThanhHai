@@ -1,0 +1,211 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Course List</title>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<h2>Danh sách học phần</h2>-->
+
+<!--<div th:each="course : ${courses}">-->
+
+<!--    <h3 th:text="${course.name}"></h3>-->
+
+<!--    <p>Tín chỉ: <span th:text="${course.credits}"></span></p>-->
+
+<!--    <p>Giảng viên: <span th:text="${course.lecturer}"></span></p>-->
+
+<!--    <img th:src="${course.image}" width="200">-->
+
+<!--    <hr>-->
+
+<!--</div>-->
+
+
+<!--<div>-->
+<!--    <a th:if="${currentPage > 0}"-->
+<!--       th:href="@{/(page=${currentPage-1})}">-->
+<!--        Previous-->
+<!--    </a>-->
+
+<!--    <span th:text="${currentPage+1}"></span> /-->
+<!--    <span th:text="${totalPages}"></span>-->
+
+<!--    <a th:if="${currentPage < totalPages-1}"-->
+<!--       th:href="@{/(page=${currentPage+1})}">-->
+<!--        Next-->
+<!--    </a>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách học phần</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --bg-body: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--text-main);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: var(--text-main);
+        }
+
+        /* Lưới hiển thị các khóa học */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* Thẻ học phần (Card) */
+        .course-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #e2e8f0;
+        }
+
+        .course-content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .course-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .course-info {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Phân trang (Pagination) */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .pagination a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .page-info {
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Danh sách học phần</h2>
+
+    <div class="course-grid">
+        <div class="course-card" th:each="course : ${courses}">
+            <img class="course-image" th:src="${course.image}" alt="Course Image">
+
+            <div class="course-content">
+                <h3 class="course-name" th:text="${course.name}"></h3>
+
+                <div class="course-info">
+                    <i class="fa-solid fa-bookmark" style="color: #f59e0b;"></i>
+                    <span>Tín chỉ: <strong th:text="${course.credits}"></strong></span>
+                </div>
+
+                <div class="course-info">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Giảng viên: <span th:text="${course.lecturer}"></span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <a th:if="${currentPage > 0}" th:href="@{/(page=${currentPage-1})}">
+            <i class="fa-solid fa-chevron-left"></i> Previous
+        </a>
+
+        <span class="page-info">
+            Trang <span th:text="${currentPage + 1}"></span> / <span th:text="${totalPages}"></span>
+        </span>
+
+        <a th:if="${currentPage < totalPages-1}" th:href="@{/(page=${currentPage+1})}">
+            Next <i class="fa-solid fa-chevron-right"></i>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
